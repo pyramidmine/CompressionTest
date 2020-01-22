@@ -33,6 +33,7 @@ namespace Validator
 			// 압축기 및 검증 여부 리스트 작성
 			items.Add(new Item("deflater", new DeflateCompressor(), true));
 			items.Add(new Item("gzip", new GZipCompressor(), true));
+			items.Add(new Item("lzma", new SevenZip.Compression.LZMA.SevenZipHelper(), true));
 
 			// 압축기를 순회하면서 검증
 			foreach (var item in items)
