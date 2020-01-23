@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Compressor;
 
-namespace DeflateSample
+namespace CompressBenchmark
 {
 	class Program
 	{
@@ -22,7 +22,7 @@ namespace DeflateSample
 		}
 
 		static readonly long TIME_RESOLUTION = 1000;    // milli seconds
-		static readonly long TRIAL_FACTOR = 50;		// loop
+		static readonly long TRIAL_FACTOR =	10;
 
 		static void Main(string[] args)
 		{
@@ -46,7 +46,12 @@ namespace DeflateSample
 			{
 				Console.WriteLine($"Sample data index: {i}");
 
-				stat[i, (int)StatColumn.TrialCount] = (long)Math.Sqrt(maxDataSize / sampleData.Texts[i].Length) * TRIAL_FACTOR;
+				// 수행횟수 계산
+				double basicCount = (double)maxDataSize / sampleData.Texts[i].Length;
+				double scaledCount = Math.Sqrt(basicCount);
+				double scaledFactor = Math.Max(1.0d, Math.Log(basicCount));
+
+				stat[i, (int)StatColumn.TrialCount] = (long)(scaledCount * scaledFactor * scaledFactor * TRIAL_FACTOR);
 				bool equality = false;
 
 				for (int j = 0; j < stat[i, (int)StatColumn.TrialCount]; j++)

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmark", "DeflateSample\Benchmark.csproj", "{52E76EC9-C5BA-4DB1-8C15-0A349CD06FF9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompressBenchmark", "DeflateSample\CompressBenchmark.csproj", "{52E76EC9-C5BA-4DB1-8C15-0A349CD06FF9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compressor", "Compressor\Compressor.csproj", "{DF04D51F-104C-4DF4-91CE-7FB6A4395033}"
 EndProject

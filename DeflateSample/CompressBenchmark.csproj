@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{52E76EC9-C5BA-4DB1-8C15-0A349CD06FF9}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>DeflateSample</RootNamespace>
-    <AssemblyName>DeflateSample</AssemblyName>
+    <RootNamespace>CompressBenchmark</RootNamespace>
+    <AssemblyName>CompressBenchmark</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
