@@ -8,7 +8,7 @@ namespace SevenZip.Compression.LZMA
     public class SevenZipHelper : ICompressor
     {
 
-       static int dictionary = 1 << 23;
+       static int dictionary = 1 << 24;
 
       // static Int32 posStateBits = 2;
      // static  Int32 litContextBits = 3; // for normal files
@@ -33,7 +33,7 @@ namespace SevenZip.Compression.LZMA
 					CoderPropID.Algorithm,
 					CoderPropID.NumFastBytes,
 					CoderPropID.MatchFinder,
-					CoderPropID.EndMarker
+					CoderPropID.EndMarker,
 				};
 
         // these are the default properties, keeping it simple for now:
@@ -43,7 +43,7 @@ namespace SevenZip.Compression.LZMA
 					(Int32)(2),
 					(Int32)(3),
 					(Int32)(0),
-					(Int32)(2),
+					(Int32)(0),
 					(Int32)(128),
 					"bt4",
 					eos

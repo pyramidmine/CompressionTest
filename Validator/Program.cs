@@ -10,12 +10,14 @@ namespace Validator
 {
 	class Item
 	{
+		public string AlgorithmName { get; private set; }
 		public string Name { get; private set; }
 		public ICompressor Compressor { get; private set; }
 		public bool Enabled { get; private set; }
 
-		public Item(string name, ICompressor compressor, bool enabled)
+		public Item(string algorithmName, string name, ICompressor compressor, bool enabled)
 		{
+			this.AlgorithmName = algorithmName;
 			this.Name = name;
 			this.Compressor = compressor;
 			this.Enabled = enabled;
@@ -31,9 +33,11 @@ namespace Validator
 			string sampleText = "To succeed in Life, you need two things: Ignorance and Confidence - Mark Twain.";
 
 			// 압축기 및 검증 여부 리스트 작성
-			items.Add(new Item("deflater", new DeflateCompressor(), true));
-			items.Add(new Item("gzip", new GZipCompressor(), true));
-			items.Add(new Item("lzma", new SevenZip.Compression.LZMA.SevenZipHelper(), true));
+			items.Add(new Item("deflater", "", new DeflateCompressor(), true));
+			items.Add(new Item("gzip", "", new GZipCompressor(), true));
+			items.Add(new Item("lzma", "", new SevenZip.Compression.LZMA.SevenZipHelper(), true));
+			items.Add(new Item("lz4", "IonWiki", new IonWikiLZ4(), true));
+			items.Add(new Item("lz4", "K4os", new K4osLZ4(), true));
 
 			// 압축기를 순회하면서 검증
 			foreach (var item in items)
@@ -82,7 +86,7 @@ namespace Validator
 				String base64EncodedText = Convert.ToBase64String(compressedData);
 
 				// Base64 인코딩 데이터를 텍스트 파일에 저장
-				string path = item.Name + ".base64.cs.txt";
+				string path = item.AlgorithmName + (string.IsNullOrEmpty(item.Name) ? "" : $".{item.Name}") + ".base64.cs.txt";
 				Console.WriteLine($"File Path: {path}");
 				Console.WriteLine($"Encoded Base64 Text: {base64EncodedText}");
 				File.WriteAllText(path, base64EncodedText);
@@ -100,13 +104,18 @@ namespace Validator
 
 				// 다른 언어 파일 검색
 				string currDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-				string otherFilePattern = item.Name + ".base64.*.txt";
-				List<string> otherCompressedDataFiles = Directory.GetFiles(currDirectory, otherFilePattern).Where(file => !file.Contains(".cs.")).ToList();
+				string otherFilePattern = item.AlgorithmName + "*.base64.*.txt";
+				string[] dataFiles = Directory.GetFiles(currDirectory, otherFilePattern);
+				List<string> otherCompressedDataFiles = dataFiles.Where(file => !file.Contains(".cs.")).ToList();
 				foreach (var file in otherCompressedDataFiles)
 				{
 					string otherBase64EncodedText = File.ReadAllText(file);
 					byte[] otherBase64DecodedData = Convert.FromBase64String(otherBase64EncodedText);
 					byte[] otherDecompressedData = item.Compressor.Decompress(otherBase64DecodedData);
+					if (otherDecompressedData == null)
+					{
+						otherDecompressedData = new byte[] { 0x01, 0x02 };
+					}
 					String otherDecodedText = Encoding.UTF8.GetString(otherDecompressedData);
 					Console.WriteLine($"Other Language, File: {Path.GetFileName(file)}, Compare Text: {sampleText.Equals(otherDecodedText)}");
 				}
