@@ -40,6 +40,7 @@ namespace CompressBenchmark
 //				new SevenZip.Compression.LZMA.SevenZipHelper()	// 압축률은 좋은데 너무 느려서 못쓰겠음
 				new IonWikiLZ4(),
 				new K4osLZ4(),
+				new OzoneSnappy()
 			};
 
 			foreach (var compressor in compressors)
@@ -118,7 +119,7 @@ namespace CompressBenchmark
 
 				// 스탯 출력
 				Console.WriteLine("---------- " + compressor.GetType().Name + "Statistics ----------");
-				Console.WriteLine("Original Length, Compressed Size, Compression Ratio, Trial Count, Encoding Time, Compression Time, Decompression Time, Decoding Time");
+				Console.WriteLine("Original Length, Encoded Size, Compressed Size, Compression Ratio, Trial Count, Encoding Time, Compression Time, Decompression Time, Decoding Time");
 				for (int i = 0; i < sampleData.Texts.Count; i++)
 				{
 					Console.WriteLine(string.Format(@"{0}, {1}, {2}, ,{3}, {4:F4}, {5:F4}, {6:F4}, {7:F4}",

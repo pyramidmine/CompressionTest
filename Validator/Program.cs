@@ -38,6 +38,7 @@ namespace Validator
 			items.Add(new Item("lzma", "", new SevenZip.Compression.LZMA.SevenZipHelper(), true));
 			items.Add(new Item("lz4", "IonWiki", new IonWikiLZ4(), true));
 			items.Add(new Item("lz4", "K4os", new K4osLZ4(), true));
+			items.Add(new Item("snappy", "CODEC", new OzoneSnappy(), true));
 
 			// 압축기를 순회하면서 검증
 			foreach (var item in items)
