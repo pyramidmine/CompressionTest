@@ -22,7 +22,7 @@ namespace CompressBenchmark
 		}
 
 		static readonly long TIME_RESOLUTION = 1000;    // milli seconds
-		static readonly long TRIAL_FACTOR =	1;
+		static readonly long TRIAL_FACTOR =	100;
 
 		static void Main(string[] args)
 		{
